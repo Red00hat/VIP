@@ -34,7 +34,7 @@ jobs:
             op item get VIPLIST --vault "VIP" --format json
 
             echo "Edit the field 'password' in the item"
-            op item edit VIPLIST password=newpassword
+            op item edit VIPLIST --tags "Netflix"
 
             echo "Show the item afer edit"
             op item get VIPLIST --vault "VIP" --format json
