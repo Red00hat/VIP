@@ -31,7 +31,7 @@ jobs:
             op --version
 
             echo "Show the item before edit"
-            op item get VIPLIST --vault "VIP" --format json
+            op item get VIPLIST --vault "VIP"
 
             echo "Edit the field 'password' in the item"
            
