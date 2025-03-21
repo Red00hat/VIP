@@ -1,1 +1,40 @@
+# This is a basic workflow that is manually triggered
 
+# Display name of workflow
+name: Edit VIP
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI or API.
+on:
+  workflow_dispatch:
+    
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "edit-item"
+  edit-item:
+  
+    # The type of runner that the job will run on, in this case a Linus hosted runner
+    runs-on:
+      - ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs command(s) using the runners shell and gets context from the github object
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@v2
+
+      - name: Edit an existing item
+        run:  |
+            echo "set service account token as environment variable for 1Password CLI"
+            export OP_SERVICE_ACCOUNT_TOKEN="${{secrets.OP_SERVICE_ACCOUNT_TOKEN}}"
+
+            echo "Show 1Password CLI version"
+            op --version
+
+            echo "Show the item before edit"
+            op item get VIPLIST --vault "VIP" --format json
+
+            echo "Edit the field 'password' in the item"
+            op item edit VIPLIST --vault "VIP" password=newpassword
+
+            echo "Show the item afer edit"
+            op item get VIPLIST --vault "VIP" --format json
